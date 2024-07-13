@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
+
+import AdminMenu from './components/AdminMenu/AdminMenu';
+import UserMenu from './components/UserMenu/UserMenu';
+
 import './App.css';
 
 function App() {
+  const [adminAuth, setAdminAuth] = useState(false);
+
+  function adminAuthButtonHandler() {
+    setAdminAuth(true);
+  }
+
+  function backToUserMenuButtonHandler() {
+    setAdminAuth(false);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {adminAuth ? (<>
+        
+        <AdminMenu adminAuthCb={backToUserMenuButtonHandler} />
+      </>) : (<>
+        <button onClick={adminAuthButtonHandler}>Вход для администратора</button><br></br>
+        <UserMenu />
+      </>)}
     </div>
   );
 }
