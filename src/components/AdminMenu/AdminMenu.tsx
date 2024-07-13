@@ -15,14 +15,12 @@ function AdminMenu({adminAuthCb}:any) {
             const password = passwordRef.current.value;
             const authStatus=auth(login, password);
             setIsAuth(authStatus);
-            //adminAuthCb(authStatus);
         }
         
     }
 
     function logoutHandler() {
         setIsAuth(false);
-        //adminAuthCb(false);
     }
 
     return (<>
