@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Form } from "../UserMenu/UserMenu";
 
 function AdminMenu({adminAuthCb}:any) {
     const [isAuth, setIsAuth] = useState(false);
@@ -15,6 +16,18 @@ function AdminMenu({adminAuthCb}:any) {
             const password = passwordRef.current.value;
             const authStatus=auth(login, password);
             setIsAuth(authStatus);
+            if(authStatus){
+                let ad=localStorage.getItem('problem7');
+                if(typeof ad === 'string'){
+                    let mas:Form = JSON.parse(ad);
+                    console.log(1,mas);
+                }
+                let ad1=localStorage.getItem('problem8');
+                if(typeof ad1 === 'string'){
+                    let mas1:Form = JSON.parse(ad1);
+                    console.log(2,mas1);
+                }
+            }
         }
         
     }
@@ -26,6 +39,7 @@ function AdminMenu({adminAuthCb}:any) {
     return (<>
         {isAuth ? (<>
             <button onClick={logoutHandler}>Выйти</button>
+
         </>) : (<>
             <button onClick={adminAuthCb}>Назад в меню пользователя</button><br></br>
             <input ref={loginRef} placeholder="Логин"></input><br></br>
