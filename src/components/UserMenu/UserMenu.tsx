@@ -24,7 +24,7 @@ function UserMenu() {
                 pcNumber: pcNumberRef.current.value,
                 description: descriptionRef.current.value,
             }
-            let i = 7;
+            let i = 1;
             while (true) {
                 if (localStorage.getItem('problem' + i.toString()) === null) {
                     localStorage.setItem('problem' + i.toString(), JSON.stringify(problem));
