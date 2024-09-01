@@ -1,6 +1,7 @@
 import { useRef } from "react";
 
 export type Form = {
+    id:number,
     name: string,
     building: string,
     class: string,
@@ -17,16 +18,18 @@ function UserMenu() {
 
     function addNewProblem() {
         if (nameRef.current && buildingRef.current && classRef.current && pcNumberRef.current && descriptionRef.current) {
-            let problem: Form = {
-                name: nameRef.current.value,
-                building: buildingRef.current.value,
-                class: classRef.current.value,
-                pcNumber: pcNumberRef.current.value,
-                description: descriptionRef.current.value,
-            }
+            
             let i = 1;
             while (true) {
                 if (localStorage.getItem('problem' + i.toString()) === null) {
+                    let problem: Form = {
+                        id: i,
+                        name: nameRef.current.value,
+                        building: buildingRef.current.value,
+                        class: classRef.current.value,
+                        pcNumber: pcNumberRef.current.value,
+                        description: descriptionRef.current.value,
+                    }
                     localStorage.setItem('problem' + i.toString(), JSON.stringify(problem));
                     
                     return;

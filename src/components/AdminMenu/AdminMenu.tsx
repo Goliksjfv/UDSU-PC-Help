@@ -35,7 +35,7 @@ function AdminMenu({adminAuthCb}:any) {
                 while (true) {
                     if (localStorage.getItem('problem' + i.toString()) === null) {
 
-                        return;
+                        break;
                     }
                     ad1=localStorage.getItem('problem' + i.toString());
                     mas1 = JSON.parse(ad1);
@@ -43,6 +43,7 @@ function AdminMenu({adminAuthCb}:any) {
                     console.log(i,mas1);
                     i++;
                 }
+                console.log(Problems[1].id)
 
             }
 
@@ -53,11 +54,23 @@ function AdminMenu({adminAuthCb}:any) {
     function logoutHandler() {
         setIsAuth(false);
     }
+    
+    let showProblems = Problems.map(function(item) {
+        return <p key={item.id}>
+           <span>{item.name}</span>
+           <span>{item.building}</span>
+           <span>{item.class}</span>
+           <span>{item.pcNumber}</span>
+           <span>{item.description}</span>
+        </p>;
+     });
 
     return (<>
         {isAuth ? (<>
             <button onClick={logoutHandler}>Выйти</button>
             <h1>Текущие задачи</h1><br></br><br></br>
+            {Problems}
+            {showProblems}
             <h1>Решённые задачи</h1>
         </>) : (<>
             <button onClick={adminAuthCb}>Назад в меню пользователя</button><br></br>
