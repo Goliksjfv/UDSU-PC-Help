@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 export type Form = {
-    id:number,
+    id: number,
     name: string,
     building: string,
     class: string,
@@ -17,25 +17,45 @@ function UserMenu() {
     const descriptionRef = useRef<HTMLInputElement>(null);
 
     function addNewProblem() {
-        if (nameRef.current && buildingRef.current && classRef.current && pcNumberRef.current && descriptionRef.current) {
-            
-            let i = 1;
-            while (true) {
-                if (localStorage.getItem('problem' + i.toString()) === null) {
-                    let problem: Form = {
-                        id: i,
-                        name: nameRef.current.value,
-                        building: buildingRef.current.value,
-                        class: classRef.current.value,
-                        pcNumber: pcNumberRef.current.value,
-                        description: descriptionRef.current.value,
-                    }
-                    localStorage.setItem('problem' + i.toString(), JSON.stringify(problem));
-                    
-                    return;
+        if (nameRef.current?.value && buildingRef.current?.value && classRef.current?.value && pcNumberRef.current?.value && descriptionRef.current?.value) {
+            if (localStorage.getItem('problem') === null) {
+                let i = 1;
+                let Problems: Form[] = [];
+                let problem: Form = {
+                    id: i,
+                    name: nameRef.current.value,
+                    building: buildingRef.current.value,
+                    class: classRef.current.value,
+                    pcNumber: pcNumberRef.current.value,
+                    description: descriptionRef.current.value,
                 }
-                i++;
+                Problems.push(problem)
+                localStorage.setItem('problem', JSON.stringify(Problems));
+
+            } else {
+                let ad1 = localStorage.getItem('problem')!;
+                let Problems: Form[] = JSON.parse(ad1);
+                let i = Problems.length + 1;
+                let problem: Form = {
+                    id: i,
+                    name: nameRef.current.value,
+                    building: buildingRef.current.value,
+                    class: classRef.current.value,
+                    pcNumber: pcNumberRef.current.value,
+                    description: descriptionRef.current.value,
+                }
+                Problems.push(problem);
+                localStorage.removeItem('problem');
+                localStorage.setItem('problem', JSON.stringify(Problems));
             }
+            nameRef.current.value = '';
+            buildingRef.current.value = '';
+            classRef.current.value = '';
+            pcNumberRef.current.value = '';
+            descriptionRef.current.value = '';
+            alert('Ваша проблема успешно отправлена, скоро она будет решена!')
+        } else {
+            alert('Заполните все поля!')
         }
     }
 
