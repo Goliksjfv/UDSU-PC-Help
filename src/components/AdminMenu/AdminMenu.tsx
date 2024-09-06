@@ -77,7 +77,7 @@ function AdminMenu({ adminAuthCb }: any) {
         } else {
             return <></>
         }
-    });
+    }).reverse();
 
     return (<>
         {isAuth ? (<>
