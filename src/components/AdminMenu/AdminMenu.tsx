@@ -1,10 +1,12 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useReducer } from "react";
 import { Form } from "../UserMenu/UserMenu";
 
 function AdminMenu({ adminAuthCb }: any) {
     const [isAuth, setIsAuth] = useState(false);
     const loginRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+
+    const [, forceUpdate] = useReducer(x => x + 1, 0);
 
     function auth(login: string, password: string) {
         return login === 'admin' && password === 'admin';
@@ -17,8 +19,8 @@ function AdminMenu({ adminAuthCb }: any) {
         Problems = JSON.parse(ad1);
     }
 
-    
-    
+
+
 
     function loginHandler() {
         if (loginRef.current && passwordRef.current) {
@@ -27,33 +29,7 @@ function AdminMenu({ adminAuthCb }: any) {
             const authStatus = auth(login, password);
             setIsAuth(authStatus);
             if (!authStatus) {
-                /*let ad=localStorage.getItem('problem1');
-                if(typeof ad === 'string'){
-                    let mas:Form = JSON.parse(ad);
-                    console.log(1,mas);
-                }
-                let ad1=localStorage.getItem('problem4');
-                if(typeof ad1 === 'string'){
-                    let mas1:Form = JSON.parse(ad1);
-                    console.log(4,mas1);
-                }
-                let i = 1;
-                let ad1:any;
-                let mas1:Form;
-                while (true) {
-                    if (localStorage.getItem('problem' + i.toString()) === null) {
-
-                        break;
-                    }
-                    ad1=localStorage.getItem('problem' + i.toString());
-                    mas1 = JSON.parse(ad1);
-                    Problems.push(mas1);
-                    //console.log(i,mas1);
-                    i++;
-                }
-                //console.log(typeof Problems)
-                */
-               alert('Неправильный логин или пароль!')
+                alert('Неправильный логин или пароль!')
             }
 
         }
@@ -64,16 +40,39 @@ function AdminMenu({ adminAuthCb }: any) {
         setIsAuth(false);
     }
 
-    let showProblems = Problems.map(function (item) {
-        return <tr key={item.id}>
+    const checkboxHandler=(id:any)=>(event:any)=>{
+        console.log(id);
+        Problems[id-1].completed=!Problems[id-1].completed;
+        localStorage.removeItem('problem');
+        localStorage.setItem('problem', JSON.stringify(Problems));
+        console.log(Problems[id-1].completed);
+        forceUpdate();
+    }
+
+    let showCurrentProblems = Problems.map(function (item) {
+        if(item.completed===false){
+            return <tr key={item.id}>
             <td>{item.id}</td>
             <td>{item.name}</td>
             <td>{item.building}</td>
             <td>{item.class}</td>
             <td>{item.pcNumber}</td>
             <td>{item.description}</td>
-            <td><input type="checkbox"></input></td>
-        </tr>
+            <td><input type="checkbox" checked={item.completed} onChange={checkboxHandler(item.id)}></input></td>
+        </tr>}
+    });
+
+    let showResolvedProblems = Problems.map(function (item) {
+        if(item.completed===true){
+            return <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.name}</td>
+            <td>{item.building}</td>
+            <td>{item.class}</td>
+            <td>{item.pcNumber}</td>
+            <td>{item.description}</td>
+            <td><input type="checkbox" checked={item.completed} onChange={checkboxHandler(item.id)}></input></td>
+        </tr>}
     });
 
     return (<>
@@ -93,11 +92,27 @@ function AdminMenu({ adminAuthCb }: any) {
                     </tr>
                 </thead>
                 <tbody>
-                    {showProblems}
+                    {showCurrentProblems}
                 </tbody>
             </table>
 
             <h1>Решённые задачи</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <td>Номер проблемы</td>
+                        <td>ФИО</td>
+                        <td>Корпус</td>
+                        <td>Аудитория</td>
+                        <td>Номер ПК</td>
+                        <td>Описание проблемы</td>
+                        <td>Выполнено</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {showResolvedProblems}
+                </tbody>
+            </table>
         </>) : (<>
             <button onClick={adminAuthCb}>Назад в меню пользователя</button><br></br>
             <input ref={loginRef} placeholder="Логин"></input><br></br>

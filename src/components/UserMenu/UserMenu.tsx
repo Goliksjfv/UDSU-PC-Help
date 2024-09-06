@@ -7,6 +7,7 @@ export type Form = {
     class: string,
     pcNumber: string,
     description: string,
+    completed:boolean
 }
 
 function UserMenu() {
@@ -28,6 +29,7 @@ function UserMenu() {
                     class: classRef.current.value,
                     pcNumber: pcNumberRef.current.value,
                     description: descriptionRef.current.value,
+                    completed:false
                 }
                 Problems.push(problem)
                 localStorage.setItem('problem', JSON.stringify(Problems));
@@ -43,6 +45,7 @@ function UserMenu() {
                     class: classRef.current.value,
                     pcNumber: pcNumberRef.current.value,
                     description: descriptionRef.current.value,
+                    completed:false
                 }
                 Problems.push(problem);
                 localStorage.removeItem('problem');
