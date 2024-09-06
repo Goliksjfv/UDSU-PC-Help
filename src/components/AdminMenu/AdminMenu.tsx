@@ -40,49 +40,52 @@ function AdminMenu({ adminAuthCb }: any) {
         setIsAuth(false);
     }
 
-    const checkboxHandler=(id:any)=>(event:any)=>{
+    const checkboxHandler = (id: any) => (event: any) => {
         console.log(id);
-        Problems[id-1].completed=!Problems[id-1].completed;
+        Problems[id - 1].completed = !Problems[id - 1].completed;
         localStorage.removeItem('problem');
         localStorage.setItem('problem', JSON.stringify(Problems));
-        console.log(Problems[id-1].completed);
+        console.log(Problems[id - 1].completed);
         forceUpdate();
     }
 
     let showCurrentProblems = Problems.map(function (item) {
-        if(item.completed===false){
+        if (item.completed === false) {
             return <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.building}</td>
-            <td>{item.class}</td>
-            <td>{item.pcNumber}</td>
-            <td>{item.description}</td>
-            <td><input type="checkbox" checked={item.completed} onChange={checkboxHandler(item.id)}></input></td>
-        </tr>}
+                <td>{item.name}</td>
+                <td>{item.building}</td>
+                <td>{item.class}</td>
+                <td>{item.pcNumber}</td>
+                <td>{item.description}</td>
+                <td><input type="checkbox" checked={item.completed} onChange={checkboxHandler(item.id)}></input></td>
+            </tr>
+        } else {
+            return <></>
+        }
     });
 
     let showResolvedProblems = Problems.map(function (item) {
-        if(item.completed===true){
+        if (item.completed === true) {
             return <tr key={item.id}>
-            <td>{item.id}</td>
-            <td>{item.name}</td>
-            <td>{item.building}</td>
-            <td>{item.class}</td>
-            <td>{item.pcNumber}</td>
-            <td>{item.description}</td>
-            <td><input type="checkbox" checked={item.completed} onChange={checkboxHandler(item.id)}></input></td>
-        </tr>}
+                <td>{item.name}</td>
+                <td>{item.building}</td>
+                <td>{item.class}</td>
+                <td>{item.pcNumber}</td>
+                <td>{item.description}</td>
+                <td><input type="checkbox" checked={item.completed} onChange={checkboxHandler(item.id)}></input></td>
+            </tr>
+        } else {
+            return <></>
+        }
     });
 
     return (<>
         {isAuth ? (<>
             <button onClick={logoutHandler}>Выйти</button>
-            <h1>Текущие задачи</h1><br></br><br></br>
+            <h1>Текущие задачи</h1>
             <table>
                 <thead>
                     <tr>
-                        <td>Номер проблемы</td>
                         <td>ФИО</td>
                         <td>Корпус</td>
                         <td>Аудитория</td>
@@ -100,7 +103,6 @@ function AdminMenu({ adminAuthCb }: any) {
             <table>
                 <thead>
                     <tr>
-                        <td>Номер проблемы</td>
                         <td>ФИО</td>
                         <td>Корпус</td>
                         <td>Аудитория</td>
