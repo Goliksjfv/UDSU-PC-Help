@@ -7,7 +7,7 @@ export type Form = {
     class: string,
     pcNumber: string,
     description: string,
-    completed:boolean
+    completed: boolean
 }
 
 function UserMenu() {
@@ -15,7 +15,7 @@ function UserMenu() {
     const buildingRef = useRef<HTMLInputElement>(null);
     const classRef = useRef<HTMLInputElement>(null);
     const pcNumberRef = useRef<HTMLInputElement>(null);
-    const descriptionRef = useRef<HTMLInputElement>(null);
+    const descriptionRef = useRef<HTMLTextAreaElement>(null); // Изменяем тип на HTMLTextAreaElement
 
     function addNewProblem() {
         if (nameRef.current?.value && buildingRef.current?.value && classRef.current?.value && pcNumberRef.current?.value && descriptionRef.current?.value) {
@@ -29,9 +29,9 @@ function UserMenu() {
                     class: classRef.current.value,
                     pcNumber: pcNumberRef.current.value,
                     description: descriptionRef.current.value,
-                    completed:false
+                    completed: false
                 }
-                Problems.push(problem)
+                Problems.push(problem);
                 localStorage.setItem('problem', JSON.stringify(Problems));
 
             } else {
@@ -45,7 +45,7 @@ function UserMenu() {
                     class: classRef.current.value,
                     pcNumber: pcNumberRef.current.value,
                     description: descriptionRef.current.value,
-                    completed:false
+                    completed: false
                 }
                 Problems.push(problem);
                 localStorage.removeItem('problem');
@@ -62,13 +62,17 @@ function UserMenu() {
         }
     }
 
-    return (<>
-        <input ref={nameRef} placeholder="Ваше ФИО" ></input><br></br>
-        <input ref={buildingRef} placeholder="Корпус"></input><br></br>
-        <input ref={classRef} placeholder="Аудитория"></input><br></br>
-        <input ref={pcNumberRef} placeholder="Номер ПК"></input><br></br>
-        <input ref={descriptionRef} placeholder="Описание проблемы"></input><br></br>
-        <button onClick={addNewProblem}>Отправить!</button>
-    </>);
+    return (
+        <>
+            <h1>Если у вас есть какая-либо проблема с работой ПК, оставьте её здесь и она будет решена</h1>
+            <input ref={nameRef} placeholder="Ваше ФИО" /><br />
+            <input ref={buildingRef} placeholder="Корпус" /><br />
+            <input ref={classRef} placeholder="Аудитория" /><br />
+            <input ref={pcNumberRef} placeholder="Номер ПК" /><br />
+            <textarea ref={descriptionRef} placeholder="Описание проблемы"></textarea><br />
+            <button onClick={addNewProblem}>Отправить!</button>
+        </>
+    );
 }
+
 export default UserMenu;

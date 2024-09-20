@@ -74,12 +74,25 @@ button:hover {
   background-color: #3700b3;
 }
 
+/* Стандартные стили для всех input */
 input {
   width: calc(100% - 20px);
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+/* Стили для textarea */
+textarea {
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical; /* Разрешаем изменять высоту вручную */
+  height: 150px; /* Задаём начальную высоту побольше для удобного ввода */
+  font-family: inherit; /* Наследуем шрифт от input */
 }
 
 table {
