@@ -15,7 +15,7 @@ function UserMenu() {
     const buildingRef = useRef<HTMLInputElement>(null);
     const classRef = useRef<HTMLInputElement>(null);
     const pcNumberRef = useRef<HTMLInputElement>(null);
-    const descriptionRef = useRef<HTMLTextAreaElement>(null); // Изменяем тип на HTMLTextAreaElement
+    const descriptionRef = useRef<HTMLTextAreaElement>(null); 
 
     function addNewProblem() {
         if (nameRef.current?.value && buildingRef.current?.value && classRef.current?.value && pcNumberRef.current?.value && descriptionRef.current?.value) {
